@@ -1,0 +1,7 @@
+# 公開しないプラグイン
+plugins/Potagon_BlackMagic.js
+plugins/Potagon_HtmlSupport.js
+plugins/Potagon_StartDeleteSaveData.js
+plugins/Potagon_Test.js
+plugins/Potagon_TestWindow.js
+plugins/Potagon_テンプレート.js
