@@ -1,6 +1,6 @@
 /*:
 @plugindesc
-タイトル処理 Ver1.1.1
+タイトル処理 Ver1.1.2
 
 @base Potagon
 
@@ -88,13 +88,12 @@ Copyright (c) 2021 ポテトドラゴン
 Released under the MIT License.
 https://opensource.org/licenses/mit-license.php
 
+・Ver1.1.2(2021/2/14)
+- リファクタ(jshint で修正)
+
 ・Ver1.1.1(2021/1/17)
 - ヘルプ修正
 - リファクタ(jshint で ES6 記法に統一)
-
-・Ver1.1.0(2021/1/11)
-- ベースプラグイン更新対応
-- コピーライト更新
 */
 
 // パラメータ定義
@@ -193,7 +192,7 @@ Scene_Title.prototype.drawVersion = function() {
     let text = VersionName;
 
     if($dataSystem.gameTitle.includes(VersionName)) {
-      text += $dataSystem.gameTitle.split(VersionName)[VersionPos]
+      text += $dataSystem.gameTitle.split(VersionName)[VersionPos];
       if (VersionId) {
         text += VersionIdName + $dataSystem.versionId;
       }

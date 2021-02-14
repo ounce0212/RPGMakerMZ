@@ -1,6 +1,6 @@
 /*:
 @plugindesc
-名前ウィンドウ自動化 Ver1.1.1
+名前ウィンドウ自動化 Ver1.1.2
 
 @base Potagon
 
@@ -23,12 +23,11 @@ Copyright (c) 2021 ポテトドラゴン
 Released under the MIT License.
 https://opensource.org/licenses/mit-license.php
 
+・Ver1.1.2(2021/2/14)
+- リファクタ(jshint で修正)
+
 ・Ver1.1.1(2021/1/17)
 - リファクタ(jshint で ES6 記法に統一)
-
-・Ver1.1.0(2021/1/11)
-- ベースプラグイン更新対応
-- コピーライト更新
 */
 
 // パラメータ定義
@@ -95,7 +94,7 @@ Game_Interpreter.prototype.command101 = function(params) {
               // アクターの名前を名前として表示
               let actor = null;
               for(let i = 1, l = $dataActors.length; i < l; i++) {
-                  actor = $dataActors[i]
+                  actor = $dataActors[i];
                   if(actor.characterName == params[0] && actor.characterIndex == params[1]) {
                     $gameMessage.setSpeakerName(actor.name);
                     break;

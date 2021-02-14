@@ -1,6 +1,6 @@
 /*:
 @plugindesc
-RPGツクールMZのバグ修正 Ver1.1.1
+RPGツクールMZのバグ修正 Ver1.1.2
 
 @base Potagon
 
@@ -24,7 +24,8 @@ RPGツクールMZのバグを修正します。
 @param FixStatusEquipOver
 @type boolean
 @text 装備タイプバグ修正
-@desc 装備タイプが7以上でステータスの装備の表示バグ修正
+@desc 装備タイプが7個以上あるときステータスの
+装備に表示しきれないバグ修正(スクロールできるように修正)
 @on 修正する
 @off 修正しない
 @default false
@@ -35,12 +36,11 @@ Copyright (c) 2021 ポテトドラゴン
 Released under the MIT License.
 https://opensource.org/licenses/mit-license.php
 
+・Ver1.1.2(2021/2/14)
+- ヘルプ修正
+
 ・Ver1.1.1(2021/1/17)
 - リファクタ(jshint で ES6 記法に統一)
-
-・Ver1.1.0(2021/1/11)
-- ベースプラグイン更新対応
-- コピーライト更新
 */
 
 // パラメータ定義

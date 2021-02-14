@@ -1,6 +1,6 @@
 /*:
 @plugindesc
-敵キャラレベル追加 Ver0.9.1
+敵キャラレベル追加 Ver0.9.2
 
 @base Potagon
 
@@ -35,12 +35,11 @@ Copyright (c) 2021 ポテトドラゴン
 Released under the MIT License.
 https://opensource.org/licenses/mit-license.php
 
+・Ver0.9.2(2021/2/14)
+- リファクタ(jshint で修正)
+
 ・Ver0.9.1(2021/1/17)
 - リファクタ(jshint で ES6 記法に統一)
-
-・Ver0.9.0(2021/1/11)
-- ベースプラグイン更新対応
-- コピーライト更新
 */
 
 // パラメータ定義
@@ -284,7 +283,7 @@ Game_Troop.prototype.setup = function(troopId) {
     if (this._turnCount === 0) {
         this.members().forEach(function(enemy){
           enemy.recoverAll();
-        })
+        });
     }
 };
 

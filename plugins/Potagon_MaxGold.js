@@ -1,6 +1,6 @@
 /*:
 @plugindesc
-所持金の最大数変更 Ver1.1.1
+所持金の最大数変更 Ver1.1.2
 
 @base Potagon
 
@@ -9,7 +9,7 @@
 @url https://raw.githubusercontent.com/potagon/RPGMakerMZ/master/plugins/Potagon_MaxGold.js
 
 @help
-所持金をパラメータで指定した値に変更します。
+所持金の最大数をパラメータで指定した値に変更します。
 
 @param MaxGold
 @type number
@@ -25,12 +25,11 @@ Copyright (c) 2021 ポテトドラゴン
 Released under the MIT License.
 https://opensource.org/licenses/mit-license.php
 
+・Ver1.1.2(2021/2/14)
+- ヘルプ修正
+
 ・Ver1.1.1(2021/1/17)
 - リファクタ(jshint で ES6 記法に統一)
-
-・Ver1.1.0(2021/1/11)
-- ベースプラグイン更新対応
-- コピーライト更新
 */
 
 // パラメータ定義

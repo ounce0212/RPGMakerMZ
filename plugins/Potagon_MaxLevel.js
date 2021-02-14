@@ -1,6 +1,6 @@
 /*:
 @plugindesc
-レベル上限突破 Ver0.10.1
+レベル上限突破 Ver0.11.0
 
 @base Potagon
 
@@ -14,11 +14,18 @@
 @param MaxLevel
 @type number
 @text 最大レベル
-@desc 最大レベル
-0 で無限になります
+@desc 0 で無限になるが、MZはループが多いと処理低下や
+フリーズするので、9999 以上にすることはおすすめしません
 @default 9999
 @max 999999999999999
 @min 0
+
+@param SmallFishName
+@type string
+@text ザコ名称
+@desc アクターのメモに記載するメタデータ(<ザコ>)の名称
+ザコは初期能力が低くなる
+@default ザコ
 
 @param MobName
 @type string
@@ -84,13 +91,12 @@ Copyright (c) 2021 ポテトドラゴン
 Released under the MIT License.
 https://opensource.org/licenses/mit-license.php
 
+・Ver0.11.0(2021/2/14)
+- ザコ用設定追加
+
 ・Ver0.10.1(2021/1/17)
 - ヘルプ修正
 - リファクタ(jshint で ES6 記法に統一)
-
-・Ver0.10.0(2021/1/11)
-- ベースプラグイン更新対応
-- コピーライト更新
 */
 
 // パラメータ定義
@@ -103,6 +109,7 @@ https://opensource.org/licenses/mit-license.php
 
     // 各パラメータ用変数
     const MaxLevel       = Number(params.MaxLevel || 9999);
+    const SmallFishName  = String(params.SmallFishName || 'ザコ');
     const MobName        = String(params.MobName || 'モブ');
     const LevelUpRecover = Potagon.convertBool(params.LevelUpRecover);
     const NameDatabase   = Potagon.convertBool(params.NameDatabase);
@@ -161,17 +168,22 @@ Game_Actor.prototype.paramBase = function(paramId) {
         init_param = Number(data[0]);
         param      = Number(data[1]);
     } else {
-        const mob = this.actor().meta[MobName];
+        const small_fish = this.actor().meta[SmallFishName];
+        const mob        = this.actor().meta[MobName];
         if (paramId == 0 || paramId == 1) {
             param = 10;
-            if (mob) {
+            if (small_fish) {
+                init_param = 10;
+            } else if (mob) {
                 init_param = 50;
             } else {
                 init_param = 100;
             }
         } else {
             param = 1;
-            if (mob) {
+            if (small_fish) {
+                init_param = 1;
+            } else if (mob) {
                 init_param = 5;
             } else {
                 init_param = 10;
@@ -304,13 +316,13 @@ class Sprite_StatusGauge extends Sprite_Gauge {
     }
     labelFontSize() {
         return $gameSystem.mainFontSize() - 8;
-    };
+    }
     valueFontFace() {
         return $gameSystem.numberFontFace() - 6;
-    };
+    }
     valueFontSize() {
         return $gameSystem.mainFontSize() - 8;
-    };
+    }
 }
 
 }

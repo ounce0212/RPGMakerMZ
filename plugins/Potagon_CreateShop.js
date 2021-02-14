@@ -1,6 +1,6 @@
 /*:
 @plugindesc
-合成屋 Ver0.6.1
+合成屋 Ver0.6.2
 
 @base Potagon
 
@@ -148,13 +148,12 @@ Copyright (c) 2021 ポテトドラゴン
 Released under the MIT License.
 https://opensource.org/licenses/mit-license.php
 
+・Ver0.6.2(2021/2/14)
+- リファクタ(jshint で ES6 記法に統一)
+
 ・Ver0.6.1(2021/1/17)
 - ヘルプ修正
 - リファクタ(jshint で ES6 記法に統一)
-
-・Ver0.6.0(2021/1/11)
-- ベースプラグイン更新対応
-- コピーライト更新
 */
 
 // パラメータ定義
@@ -508,7 +507,7 @@ Window_CreateShopNumber.prototype.updateMaterialWindowNumber = function() {
     if (this._materialWindow) {
         this._materialWindow.setNumber(this._number);
     }
-}
+};
 
 
 /**
@@ -567,7 +566,7 @@ Window_Material.prototype.initialize = function(rect) {
 Window_Material.prototype.setIndex= function(index) {
     this._index = index;
     this.refresh();
-}
+};
 
 /**
  * 個数の設定
@@ -577,7 +576,7 @@ Window_Material.prototype.setIndex= function(index) {
 Window_Material.prototype.setNumber = function(number) {
     this._number = number;
     this.refresh();
-}
+};
 
 /**
  * リフレッシュ

@@ -1,20 +1,53 @@
 /*:
 @plugindesc
-敵グループランダム決定 Ver1.1.0
+敵グループランダム決定 Ver1.1.1
 
 @target MZ
 @author ポテトドラゴン
 @url https://raw.githubusercontent.com/potagon/RPGMakerMZ/master/plugins/Potagon_RandomTroop.js
 
 @help
-敵グループ名に<MAX:8><MIN:1>を指定することで、
-ランダムに敵キャラを出現出来るようにします。
+任意の敵グループにて、ランダムに敵キャラを決定できる機能を追加します。
+
+■ 使い方
+
+1. 任意の敵グループを選択します。
+
+2. ランダム出現させたい敵キャラを追加します。
+   同じ敵キャラを追加した場合は、出現率が上がります。
+
+3. 敵グループ名にタグを記載します。
+   タグの記載方法は、下記手順を参考にしてください。
+
+4. マップやイベントの設定で敵グループを呼び出すと、ランダムに敵キャラが出現します。
+
+■ タグ
+
+敵グループ名に下記タグを指定することで、
+敵グループをランダムに決定します。
+
+タグを指定しない場合は、 通常の敵グループとして扱われます。
+
+・<MIN:1>
+敵キャラの最低出現数を1～8で指定します。
+
+・<MAX:1>
+敵キャラの最大出現数を1～8で指定します。
+
+・<FIX:1>
+固定する敵キャラを1～8で指定します。
+1～8の順番は敵グループに追加した順番です。
+最初に追加したものが、1番になります。
 */
 
 /*
 Copyright (c) 2021 ポテトドラゴン
 Released under the MIT License.
 https://opensource.org/licenses/mit-license.php
+
+・Ver1.1.1(2021/2/14)
+- ヘルプ修正
+- リファクタ(jshint で修正)
 
 ・Ver1.1.0(2021/1/11)
 - コピーライト更新
@@ -72,7 +105,7 @@ Game_Troop.prototype.setup = function(troopId) {
         // 固定敵キャラの設定
         let fix = [];
         if (fix_match) {
-            fix = fix_match[1].split(',')
+            fix = fix_match[1].split(',');
         }
 
         // 敵キャラを抽選

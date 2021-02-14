@@ -1,6 +1,6 @@
 /*:
 @plugindesc
-常時マップ名表示 Ver1.1.1
+常時マップ名表示 Ver1.2.0
 
 @base Potagon
 
@@ -9,13 +9,23 @@
 @url https://raw.githubusercontent.com/potagon/RPGMakerMZ/master/plugins/Potagon_EternalMapName.js
 
 @help
-表示名が有効なマップで、マップ名を常に表示します。
+マップ名を常に表示します。
+
+
 
 @param DisableMapNameSwitch
 @type switch
 @text 非表示スイッチ
 @desc ONのときマップ名を非表示にするスイッチ
 @default 5
+
+@param EnableMapName
+@type boolean
+@text マップ名前表示
+@desc 表示名がないとき、マップの名前を表示するか
+@default false
+@on 表示する
+@off 表示しない
 
 @param FloorVariable
 @type variable
@@ -39,12 +49,12 @@ Copyright (c) 2021 ポテトドラゴン
 Released under the MIT License.
 https://opensource.org/licenses/mit-license.php
 
+・Ver1.2.0(2021/2/14)
+- 表示名 > 名前 の優先順位で表示するように変更
+- 名前をマップに表示するパラメータを追加
+
 ・Ver1.1.1(2021/1/17)
 - リファクタ(jshint で ES6 記法に統一)
-
-・Ver1.1.0(2021/1/11)
-- ベースプラグイン更新対応
-- コピーライト更新
 */
 
 // パラメータ定義
@@ -57,6 +67,7 @@ https://opensource.org/licenses/mit-license.php
 
     // 各パラメータ用変数
     const DisableMapNameSwitch = Number(params.DisableMapNameSwitch || 5);
+    const EnableMapName        = Potagon.convertBool(params.EnableMapName);
     const FloorVariable        = Number(params.FloorVariable || 10);
     const PrefixUnderground    = String(params.PrefixUnderground) || 'B';
     const SuffixFloor          = String(params.SuffixFloor) || 'F';
@@ -127,12 +138,17 @@ Window_MapName.prototype.close = function() {
 Window_MapName.prototype.refresh = function() {
     const MapInfo = $dataMapInfos[$gameMap._mapId];
     this.contents.clear();
-
     if (!MapInfo) {
         return false;
     }
 
-    const MapName = String(MapInfo.name) || $gameMap.displayName();
+    // 表示名を格納
+    let MapName = $gameMap.displayName();
+
+    // 表示名がなく、名前表示が有効のとき名前を格納
+    if (EnableMapName && !MapName) {
+        MapName = String(MapInfo.name);
+    }
 
     if (MapName && $gameSwitches.value(DisableMapNameSwitch) === false) {
         const width = this.contentsWidth();
