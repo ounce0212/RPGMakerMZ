@@ -1,6 +1,6 @@
 /*:
 @plugindesc
-常時マップ名表示 Ver1.2.0
+常時マップ名表示 Ver1.2.1
 
 @base Potagon
 
@@ -11,13 +11,11 @@
 @help
 マップ名を常に表示します。
 
-
-
 @param DisableMapNameSwitch
 @type switch
 @text 非表示スイッチ
 @desc ONのときマップ名を非表示にするスイッチ
-@default 5
+@default 0
 
 @param EnableMapName
 @type boolean
@@ -31,7 +29,7 @@
 @type variable
 @text 階層変数
 @desc 階層を管理する変数
-@default 10
+@default 0
 
 @param PrefixUnderground
 @text 地下名称
@@ -49,12 +47,13 @@ Copyright (c) 2021 ポテトドラゴン
 Released under the MIT License.
 https://opensource.org/licenses/mit-license.php
 
+・Ver1.2.1(2021/2/26)
+- 非表示スイッチをデフォルト使用しないように修正
+- 階層変数をデフォルト使用しないように修正
+
 ・Ver1.2.0(2021/2/14)
 - 表示名 > 名前 の優先順位で表示するように変更
 - 名前をマップに表示するパラメータを追加
-
-・Ver1.1.1(2021/1/17)
-- リファクタ(jshint で ES6 記法に統一)
 */
 
 // パラメータ定義
@@ -66,9 +65,9 @@ https://opensource.org/licenses/mit-license.php
     const params      = PluginManager.parameters(plugin_name);
 
     // 各パラメータ用変数
-    const DisableMapNameSwitch = Number(params.DisableMapNameSwitch || 5);
+    const DisableMapNameSwitch = Number(params.DisableMapNameSwitch || 0);
     const EnableMapName        = Potagon.convertBool(params.EnableMapName);
-    const FloorVariable        = Number(params.FloorVariable || 10);
+    const FloorVariable        = Number(params.FloorVariable || 0);
     const PrefixUnderground    = String(params.PrefixUnderground) || 'B';
     const SuffixFloor          = String(params.SuffixFloor) || 'F';
 
@@ -150,12 +149,12 @@ Window_MapName.prototype.refresh = function() {
         MapName = String(MapInfo.name);
     }
 
-    if (MapName && $gameSwitches.value(DisableMapNameSwitch) === false) {
+    if (MapName && (DisableMapNameSwitch === 0 || $gameSwitches.value(DisableMapNameSwitch) === false)) {
         const width = this.contentsWidth();
         this.drawBackground(0, 0, width, this.lineHeight());
-        if ($gameVariables.value(FloorVariable) >= 1) {
+        if (FloorVariable !== 0 && $gameVariables.value(FloorVariable) >= 1) {
             this.drawText(MapName + $gameVariables.value(FloorVariable) + SuffixFloor, 0, 0, width, 'center');
-        } else if ($gameVariables.value(FloorVariable) <= -1) {
+        } else if (FloorVariable !== 0 && $gameVariables.value(FloorVariable) <= -1) {
             this.drawText(MapName + PrefixUnderground + -$gameVariables.value(FloorVariable) + SuffixFloor, 0, 0, width, 'center');
         } else {
             this.drawText(MapName, 0, 0, width, 'center');

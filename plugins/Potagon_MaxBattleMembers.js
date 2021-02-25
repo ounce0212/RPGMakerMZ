@@ -1,6 +1,6 @@
 /*:
 @plugindesc
-バトルメンバーの最大数変更 Ver1.1.1
+バトルメンバーの最大数変更 Ver1.1.2
 
 @base Potagon
 
@@ -30,6 +30,9 @@
 Copyright (c) 2021 ポテトドラゴン
 Released under the MIT License.
 https://opensource.org/licenses/mit-license.php
+
+・Ver1.1.2(2021/2/26)
+- 戦闘のメニューも5人化
 
 ・Ver1.1.1(2021/1/17)
 - リファクタ(jshint で ES6 記法に統一)
@@ -116,6 +119,47 @@ Window_MenuStatus.prototype.drawActorSimpleStatus = function(actor, x, y) {
     this.drawActorClass(actor, x2, y);
     this.placeBasicGauges(actor, x2, y + lineHeight);
     this.resetFontSettings();
+};
+
+/**
+ * 
+ *
+ * @returns {number} 
+ */
+Window_BattleStatus.prototype.maxCols = function() {
+    return MaxBattleMembers;
+};
+
+/**
+ * 
+ *
+ * @param {} actor - 
+ * @param {} x - 
+ * @param {} y - 
+ * @param {} width - 
+ */
+Window_BattleStatus.prototype.drawActorName = function(actor, x, y, width) {
+    width = 64;
+    this.changeTextColor(ColorManager.hpColor(actor));
+    //this.drawText(actor.name(), x, y, width);
+};
+
+/**
+ * 
+ *
+ * @returns {} 
+ */
+Sprite_Name.prototype.bitmapWidth = function() {
+    return 128 - (32 * (MaxBattleMembers- 4));
+};
+
+/**
+ * 
+ *
+ * @returns {number} 
+ */
+Sprite_Gauge.prototype.bitmapWidth = function() {
+    return 128 - (32 * (MaxBattleMembers- 4));
 };
 
 }
